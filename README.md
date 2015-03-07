@@ -32,30 +32,25 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 1. Frameworks
     * [jQuery](#jquery)
     
-1.Javascript Patterns
-9. Handling Errors
-	9.1. Custom Exceptions 
+1. Javascript Patterns
+    * Handling Errors
+	* Custom Exceptions
+	* Mixins
+	* Classes
 
-	10.1 MIxins
-	
-	10.2 Classes
-		Implementing a object to create classes that can handle inheritance
+1. Unit Testing
 
-10. Unit Testing
+1. Javascript Validation 
+    * JSLint
 
-11. Javascript Validation JSLint
-
-
-11. jsDocs    
-    
 1. [ECMAScript 5 Compatibility](#ecmascript-5-compatibility)
+
 1. [Resources](#resources)
     * [Performance](#performance)
 
-
 ## Types
 
-  - **Primitives**: When you access a primitive type you work directly on its value.
+- **Primitives**: When you access a primitive type you work directly on its value.
 
     + `string`
     + `number`
@@ -64,22 +59,28 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     + `undefined`
 
     ```javascript
-    var foo = 1;
-    var bar = foo;
+    var foo,
+        bar;
+    
+    foo = 1;
+    bar = foo;
 
     bar = 9;
 
     console.log(foo, bar); // => 1, 9
     ```
-  - **Complex**: When you access a complex type you work on a reference to its value.
+- **Complex**: When you access a complex type you work on a reference to its value.
 
     + `object`
     + `array`
     + `function`
 
     ```javascript
-    var foo = [1, 2];
-    var bar = foo;
+    var foo,
+        bar;
+    
+    foo = [1, 2];
+    bar = foo;
 
     bar[0] = 9;
 
@@ -90,34 +91,38 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Objects
 
-  - Use the literal syntax for object creation.
+- Use the literal syntax for object creation.
 
     ```javascript
+    var item;
+    
     // bad
-    var item = new Object();
+    item = new Object();
 
     // good
-    var item = {};
+    item = {};
     ```
 
-  - Don't use [reserved words](http://es5.github.io/#x7.6.1) as keys. It won't work in IE8. 
-    [More info](https://github.com/airbnb/javascript/issues/61).
+- Don't use [reserved words](http://es5.github.io/#x7.6.1) as keys. It won't work in IE8. 
+  [More info](https://github.com/airbnb/javascript/issues/61).
 
     ```javascript
+    var superman;
+    
     // bad
-    var superman = {
+    superman = {
       default: { clark: 'kent' },
       private: true
     };
 
     // good
-    var superman = {
+    superman = {
       defaults: { clark: 'kent' },
       hidden: true
     };
     ```
 
-  - Use readable synonyms in place of reserved words.
+- Use readable synonyms in place of reserved words.
 
     ```javascript
     // bad
@@ -140,21 +145,24 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Arrays
 
-  - Use the literal syntax for array creation.
+- Use the literal syntax for array creation.
 
     ```javascript
+    var items;
+    
     // bad
-    var items = new Array();
+    items = new Array();
 
     // good
-    var items = [];
+    items = [];
     ```
 
   - If you don't know array length use Array#push.
 
     ```javascript
-    var someStack = [];
-
+    var someStack;
+    
+    someStack = [];
 
     // bad
     someStack[someStack.length] = 'abracadabra';
@@ -163,13 +171,16 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     someStack.push('abracadabra');
     ```
 
-  - When you need to copy an array use Array#slice. [jsPerf](http://jsperf.com/converting-arguments-to-an-array/7)
+- When you need to copy an array use Array#slice. [jsPerf](http://jsperf.com/converting-arguments-to-an-array/7)
 
     ```javascript
-    var len = items.length;
-    var itemsCopy = [];
-    var i;
-
+    var itemCopy,
+        len,
+        i
+    
+    len = items.length;
+    itemsCopy = [];
+    
     // bad
     for (i = 0; i < len; i++) {
       itemsCopy[i] = items[i];
@@ -179,12 +190,14 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     itemsCopy = items.slice();
     ```
 
-  - To convert an array-like object to an array, use Array#slice.
+- To convert an array-like object to an array, use Array#slice.
 
     ```javascript
     function trigger() {
-      var args = Array.prototype.slice.call(arguments);
-      ...
+        var arg;
+        
+        args = Array.prototype.slice.call(arguments);
+        //...
     }
     ```
 
@@ -193,55 +206,59 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Strings
 
-  - Use single quotes `''` for strings.
+- Use single quotes `''` for strings.
 
     ```javascript
+    var name;
+    
     // bad
-    var name = "Bob Parr";
+    name = "Bob Parr";
 
     // good
-    var name = 'Bob Parr';
+    name = 'Bob Parr';
 
     // bad
-    var fullName = "Bob " + this.lastName;
+    fullName = "Bob " + this.lastName;
 
     // good
-    var fullName = 'Bob ' + this.lastName;
+    fullName = 'Bob ' + this.lastName;
     ```
 
-  - Strings longer than 120 characters should be written across multiple lines using string concatenation.
+- Strings longer than 120 characters should be written across multiple lines using string concatenation.
   
-  - The line breaks must be placed a space after operator or commas, and the next line will be indented as many spaces to be 
-    in the same line number as the upper line where the string begins;
+- The line breaks must be placed a space after operator or commas, and the next line will be indented as many spaces to be 
+  in the same line number as the upper line where the string begins;
     
-  - Note: If overused, long strings with concatenation could impact performance. 
-          [jsPerf](http://jsperf.com/ya-string-concat) & [Discussion](https://github.com/airbnb/javascript/issues/40).
+- Note: If overused, long strings with concatenation could impact performance. 
+        [jsPerf](http://jsperf.com/ya-string-concat) & [Discussion](https://github.com/airbnb/javascript/issues/40).
 
     ```javascript
+    var errorMessage;
+    
     // bad
-    var errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how 
-                        Batman had anything to do with this, you would get nowhere fast.';
+    errorMessage = 'This is a super long error that was thrown because of Batman. When you stop to think about how 
+                    Batman had anything to do with this, you would get nowhere fast.';
 
     // bad
-    var errorMessage = 'This is a super long error that was thrown because \
+    errorMessage = 'This is a super long error that was thrown because \
     of Batman. When you stop to think about how Batman had anything to do \
     with this, you would get nowhere \
     fast.';
 
     // good
-    var errorMessage = 'This is a super long error that was thrown because ' +
-                       'of Batman. When you stop to think about how Batman had anything to do ' +
-                       'with this, you would get nowhere fast.';
+    errorMessage = 'This is a super long error that was thrown because ' +
+                   'of Batman. When you stop to think about how Batman had anything to do ' +
+                   'with this, you would get nowhere fast.';
     ```
 
-  - When programmatically building up a string, use Array#join instead of string concatenation. 
-    Mostly for IE: [jsPerf](http://jsperf.com/string-vs-array-concat/2).
+- When programmatically building up a string, use Array#join instead of string concatenation. 
+  Mostly for IE: [jsPerf](http://jsperf.com/string-vs-array-concat/2).
 
     ```javascript
-    var items;
-    var messages;
-    var length;
-    var i;
+    var items,
+        messages,
+        length,
+        i;
 
     messages = [{
       state: 'success',
@@ -284,7 +301,7 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Functions
 
-  - Function expressions:
+- Function expressions:
 
     ```javascript
     // anonymous function expression
@@ -678,6 +695,8 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 
 ## Comments
+
+- *jsDocs*
 
   - Use `/** ... */` for multiline comments. Include a description, specify types and values for all parameters and 
     return values.
