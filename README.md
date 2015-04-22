@@ -4,7 +4,6 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 *A mostly reasonable approach to JavaScript*
 
-
 ## Table of Contents
 
 1. [Language Basics](#language)
