@@ -1,0 +1,14 @@
+{
+  "name": "437464d0899504fb6b7b",
+  "version": "0.0.0",
+  "description": "ERROR: No README.md file found!",
+  "scripts" : {
+   "jscs": "node validateStyle.js"
+  },
+  "pre-commit": [
+    "jscs"
+  ],
+  "devDependencies": {
+    "pre-commit": "~1.0.6"
+  }
+}

@@ -22,6 +22,5 @@ function validateJS(filesName) {
 exec('git diff --name-only --cached', function(error, stdout, stderr) {
     var filesName;
     filesName = stdout.split('\n');
-    console.log("aja");
     validateJS(filesName);
 });
