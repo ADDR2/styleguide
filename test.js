@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 
+
 function validateJS(filesName) {
 	var re = /(?:\.([^.]+))?$/;
 
@@ -7,7 +8,11 @@ function validateJS(filesName) {
 		filesName.forEach(function(item) {
 			if(re.exec(item)[1] === "js") {
 				exec('jscs '+item, function (error, stdout, stderr) {
-					console.log(stdout);
+					if(!stdout.search("No code style errors found.")) {
+						console.log("no errors");
+					}else {
+						console.log("errors");
+					}
 				});
 			}
 		});
