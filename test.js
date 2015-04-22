@@ -6,7 +6,9 @@ function validateJS(filesName) {
 	if(filesName.length > 0) {
 		filesName.forEach(function(item) {
 			if(re.exec(item)[1] === "js") {
-				console.log(item);
+				exec('jscs '+item, function (error, stdout, stderr) {
+					console.log(stdout);
+				});
 			}
 		});
 	}
