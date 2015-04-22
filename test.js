@@ -1,11 +1,13 @@
 var exec = require('child_process').exec;
 
 function validateJS(filesName) {
+	var re = /(?:\.([^.]+))?$/;
 
 	if(filesName.length > 0) {
 		filesName.forEach(function(item) {
 			if(item !== "") {
-				console.log(item);
+				
+				console.log(re.exec(item)[1]);
 			}
 		});
 	}
