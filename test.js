@@ -6,11 +6,12 @@ function validateJS(filesName) {
 	if(filesName.length > 0) {
 		filesName.forEach(function(item) {
 			if(item !== "") {
-				
+
 				console.log(re.exec(item)[1]);
 			}
 		});
 	}
+	
 	// exec('jscs', function (error, stdout, stderr) {
 	// });
 }
