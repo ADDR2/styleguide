@@ -1,11 +1,22 @@
 var exec = require('child_process').exec;
 
+function validateJS(filesName) {
+
+	if(filesName.length > 0) {
+		filesName.forEach(function(item) {
+			if(item !== "") {
+				console.log(item);
+			}
+		});
+	}
+	// exec('jscs', function (error, stdout, stderr) {
+	// });
+}
+
 exec('git diff --name-only --cached', function (error, stdout, stderr) {
-	console.log("empieza aqui");
-	console.log(stdout.split("\n"));
-		
-  //  if(stdout.search("console.log") !== -1) {
-  //  		console.log("remove console.log in js files");
+	var filesName;
+	filesName = stdout.split("\n");
+	validateJS(filesName);	
+
 		// process.exit(1);
-  //  }
 });
