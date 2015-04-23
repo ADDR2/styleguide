@@ -1605,13 +1605,95 @@ Native Object augmentation is strictly forbidden.
 **[⬆ back to top](#table-of-contents)**
 
 ## Validate Pre-Commit
+
 validates js files according to some predefined styles, before making a commit.
 
 such requirements must be installed nodejs and jscs .
 
-Once cloned the repository dependencies installed .
++ [NodeJs](https://nodejs.org/)
 
-once finished installing , when a commit validate according to the rules defined styles is made.
+  **Installation** 
+
+  - NodeJs can be installed via package manager:
+
+    Setup with Ubuntu:
+    
+    ```
+      curl -sL https://deb.nodesource.com/setup | sudo bash -
+      ```
+
+    Then install with Ubuntu:
+
+    ```
+      sudo apt-get install -y nodejs
+      ```
+
+    Setup with Debian (as root):
+
+    ```
+      apt-get install curl
+      ```
+
+    ```
+      curl -sL https://deb.nodesource.com/setup | bash -
+      ```
+
+    Then install with Debian (as root):
+
+    ```
+      apt-get install -y nodejs
+      ```
+
+    For more information  [NodeJs via package manager](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager) 
+
++ [JSCS](http://jscs.info/overview.html) 
+
+  **Installation** 
+
+    - jscs can be installed using npm:
+
+      ```
+      npm install jscs -g
+      ```
+
+    - Once cloned the repository dependencies installed .
+
+      ``` npm install
+      ```
+
+  once finished installing , when a commit validate according to the rules defined styles is made.
+
++ [JSCS Rules](http://jscs.info/rules.html)
+
+these rules are added to the file .jscsrc
+
+  **.jscsrc file**
+
+          {
+            "preset": "google",
+            "fileExtensions": [ ".js", "jscs" ],
+            "excludeFiles": ["node_modules/**", "validateStyle.js", ".jscsrc", "package.json"],
+
+            "requireParenthesesAroundIIFE": true,
+            "maximumLineLength": 120,
+            "validateLineBreaks": "LF",
+            "validateIndentation": 4,
+
+            "disallowKeywords": ["with"],
+            "disallowSpacesInsideObjectBrackets": null,
+            "disallowImplicitTypeConversion": ["string"],
+
+            "safeContextKeyword": "_this"
+          }
+
+
+  **Some rules**
+
+   - preset: predefined style. 
+   - fileExtensions: extensions were verified. 
+   - excludeFiles: files and directories that will not take into account.
+
+
 
 **[⬆ back to top](#table-of-contents)**
 
