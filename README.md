@@ -4,7 +4,6 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 *A mostly reasonable approach to JavaScript*
 
-
 ## Table of Contents
 
 1. [Language Basics](#language)
@@ -47,6 +46,9 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 1. [Resources](#resources)
     * [Performance](#performance)
+
+1. [Validate Pre-Commit](#validate-precommit)
+    
 
 ## Types
 
@@ -1599,6 +1601,17 @@ Native Object augmentation is strictly forbidden.
   - [innerHTML vs textContent for script text](http://jsperf.com/innerhtml-vs-textcontent-for-script-text)
   - [Long String Concatenation](http://jsperf.com/ya-string-concat)
   - Loading...
+
+**[⬆ back to top](#table-of-contents)**
+
+## Validate Pre-Commit
+validates js files according to some predefined styles, before making a commit.
+
+such requirements must be installed nodejs and jscs .
+
+Once cloned the repository dependencies installed .
+
+once finished installing , when a commit validate according to the rules defined styles is made.
 
 **[⬆ back to top](#table-of-contents)**
 
