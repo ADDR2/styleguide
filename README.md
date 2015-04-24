@@ -31,16 +31,13 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 1. Frameworks
     * [jQuery](#jquery)
     
-1. Javascript Patterns
+1. Javascript Patterns TODO
     * Handling Errors
 	* Custom Exceptions
 	* Mixins
 	* Classes
 
-1. Unit Testing
-
-1. Javascript Validation 
-    * JSLint
+1. Testing TODO
 
 1. [ECMAScript 5 Compatibility](#ecmascript-5-compatibility)
 
@@ -303,19 +300,23 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Functions
 
-- Function expressions:
+- Always use function expressions to declare functions. Function declaration are hoisted and it can bring confusion
 
     ```javascript
     // anonymous function expression
     var anonymous = function() {
-      return true;
+        return true;
     };
 
     // named function expression
     var named = function named() {
-      return true;
+        return true;
     };
-
+    
+    //bad function declaration
+    function named() {
+        return true;
+    };
     ```
 
   - Any script in javascript must be wrapped around a IIFE, this avoids polluting the global namespace. More 
@@ -418,31 +419,30 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     var superPower = new SuperPower();
     ```
 
-  - Use one `var` declaration per variable.
-    It's easier to add new variable declarations this way, and you never have
-    to worry about swapping out a `;` for a `,` or introducing punctuation-only
-    diffs.
+  - Use one `var` declaration for all variables at the beginning of every function scope. This makes clear that variable
+  instantiation happens at the beginning of the scope. For more information refer to 
+  [JavaScript Scoping & Hoisting](http://www.adequatelygood.com/2010/2/JavaScript-Scoping-and-Hoisting) 
+  by [Ben Cherry](http://www.adequatelygood.com/).
+    
 
     ```javascript
     // bad
-    var items = getItems(),
-        goSportsTeam = true,
-        dragonball = 'z';
-
-    // bad
-    // (compare to above, and try to spot the mistake)
-    var items = getItems(),
-        goSportsTeam = true;
-        dragonball = 'z';
+    var items = getItems();
+    var goSportsTeam = true,
+    var dragonball = 'z';
 
     // good
-    var items = getItems();
-    var goSportsTeam = true;
-    var dragonball = 'z';
+    var items,
+        goSportsTeam,
+        dragonball;
+        
+    items = getItems();
+    goSportsTeam = true;
+    dragonball = 'z';
     ```
 
-  - Declare unassigned variables last. This is helpful when later on you might need to assign a variable depending on 
-    one of the previous assigned variables.
+  - Never initialize variables in variable declarations. Variable declarations get hoisted to the top of their scope, 
+    their assignment does not.
 
     ```javascript
     // bad
@@ -458,165 +458,17 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     var len;
 
     // good
-    var items = getItems();
-    var goSportsTeam = true;
-    var dragonball;
-    var length;
-    var i;
-    ```
-
-  - Assign variables at the top of their scope. This helps avoid issues with variable declaration and assignment 
-    hoisting related issues.
-
-    ```javascript
-    // bad
-    function() {
-      test();
-      console.log('doing stuff..');
-
-      //..other stuff..
-
-      var name = getName();
-
-      if (name === 'test') {
-        return false;
-      }
-
-      return name;
-    }
-
-    // good
-    function() {
-      var name = getName();
-
-      test();
-      console.log('doing stuff..');
-
-      //..other stuff..
-
-      if (name === 'test') {
-        return false;
-      }
-
-      return name;
-    }
-
-    // bad
-    function() {
-      var name = getName();
-
-      if (!arguments.length) {
-        return false;
-      }
-
-      return true;
-    }
-
-    // good
-    function() {
-      if (!arguments.length) {
-        return false;
-      }
-
-      var name = getName();
-
-      return true;
-    }
+    var items,
+        goSportsTeam,
+        dragonball,
+        length,
+        i;
+        
+    items = getItems();
+    goSportsTeam = true;
     ```
 
 **[⬆ back to top](#table-of-contents)**
-
-
-## Hoisting
-
-  - Variable declarations get hoisted to the top of their scope, their assignment does not.
-
-    ```javascript
-    // we know this wouldn't work (assuming there
-    // is no notDefined global variable)
-    function example() {
-      console.log(notDefined); // => throws a ReferenceError
-    }
-
-    // creating a variable declaration after you
-    // reference the variable will work due to
-    // variable hoisting. Note: the assignment
-    // value of `true` is not hoisted.
-    function example() {
-      console.log(declaredButNotAssigned); // => undefined
-      var declaredButNotAssigned = true;
-    }
-
-    // The interpreter is hoisting the variable
-    // declaration to the top of the scope,
-    // which means our example could be rewritten as:
-    function example() {
-      var declaredButNotAssigned;
-      console.log(declaredButNotAssigned); // => undefined
-      declaredButNotAssigned = true;
-    }
-    ```
-
-  - Anonymous function expressions hoist their variable name, but not the function assignment.
-
-    ```javascript
-    function example() {
-      console.log(anonymous); // => undefined
-
-      anonymous(); // => TypeError anonymous is not a function
-
-      var anonymous = function() {
-        console.log('anonymous function expression');
-      };
-    }
-    ```
-
-  - Named function expressions hoist the variable name, not the function name or the function body.
-
-    ```javascript
-    function example() {
-      console.log(named); // => undefined
-
-      named(); // => TypeError named is not a function
-
-      superPower(); // => ReferenceError superPower is not defined
-
-      var named = function superPower() {
-        console.log('Flying');
-      };
-    }
-
-    // the same is true when the function name
-    // is the same as the variable name.
-    function example() {
-      console.log(named); // => undefined
-
-      named(); // => TypeError named is not a function
-
-      var named = function named() {
-        console.log('named');
-      }
-    }
-    ```
-
-  - Function declarations hoist their name and the function body.
-
-    ```javascript
-    function example() {
-      superPower(); // => Flying
-
-      function superPower() {
-        console.log('Flying');
-      }
-    }
-    ```
-
-  - For more information refer to [JavaScript Scoping & Hoisting](http://www.adequatelygood.com/2010/2/JavaScript-Scoping-and-Hoisting) 
-    by [Ben Cherry](http://www.adequatelygood.com/).
-
-**[⬆ back to top](#table-of-contents)**
-
-
 
 ## Conditional Expressions & Equality
 
@@ -637,25 +489,25 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     }
     ```
 
-  - Use shortcuts.
+  - Don't use shortcuts, they can bring confusion.
 
     ```javascript
-    // bad
-    if (name !== '') {
+    // good
+    if (name === undefined) {
       // ...stuff...
     }
 
-    // good
+    // bad
     if (name) {
       // ...stuff...
     }
 
-    // bad
+    // good
     if (collection.length > 0) {
       // ...stuff...
     }
 
-    // good
+    // bad
     if (collection.length) {
       // ...stuff...
     }
@@ -698,10 +550,8 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Comments
 
-- *jsDocs*
-
-  - Use `/** ... */` for multiline comments. Include a description, specify types and values for all parameters and 
-    return values.
+  - *jsDoc* Use `/** ... */` for multiline comments using JSDocs format. Include a description, specify types and values 
+    for all parameters and return values. More information at [JSDocs](http://usejsdoc.org/tags-description.html)
 
     ```javascript
     // bad
@@ -719,10 +569,10 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
     // good
     /**
-     * make() returns a new element
+     * @descriptions make() returns a new element
      * based on the passed in tag name
      *
-     * @param {String} tag
+     * @param {String} tag - Description of the parameter
      * @return {Element} element
      */
     function make(tag) {
@@ -766,8 +616,8 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
   - Prefixing your comments with `FIXME` or `TODO` helps other developers quickly understand if you're pointing out a 
     problem that needs to be revisited, or if you're suggesting a solution to the problem that needs to be implemented. 
-    These are different than regular comments because they are actionable. 
-    The actions are `FIXME -- need to figure this out` or `TODO -- need to implement`.
+    These are different than regular comments because they are actionable. Don't use other type of tags like 'HACK' or 
+    'XXX'. The actions are `FIXME -- need to figure this out` or `TODO -- need to implement`.
 
   - Use `// FIXME:` to annotate problems.
 
@@ -798,10 +648,10 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Whitespace
 
-  - Use soft tabs set to 2 spaces.
+  - Use soft tabs set to 4 spaces.
 
     ```javascript
-    // bad
+    // good
     function() {
     ∙∙∙∙var name;
     }
@@ -811,7 +661,7 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     ∙var name;
     }
 
-    // good
+    // bad
     function() {
     ∙∙var name;
     }
@@ -894,10 +744,10 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
     // good
     $('#items')
-      .find('.selected')
+        .find('.selected')
         .highlight()
         .end()
-      .find('.open')
+        .find('.open')
         .updateCount();
 
     // bad
@@ -905,17 +755,6 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
         .attr('width',  (radius + margin) * 2).append('svg:g')
         .attr('transform', 'translate(' + (radius + margin) + ',' + (radius + margin) + ')')
         .call(tron.led);
-
-    // good
-    var leds = stage.selectAll('.led')
-        .data(data)
-      .enter().append('svg:svg')
-        .class('led', true)
-        .attr('width',  (radius + margin) * 2)
-      .append('svg:g')
-        .attr('transform', 'translate(' + (radius + margin) + ',' + (radius + margin) + ')')
-        .call(tron.led);
-    ```
 
   - Leave a blank line after blocks and before the next statement
 
@@ -1069,7 +908,7 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     var totalScore = this.reviewScore + '';
 
     // good
-    var totalScore = '' + this.reviewScore;
+    var totalScore = this.reviewScore.toString();
 
     // bad
     var totalScore = '' + this.reviewScore + ' total score';
@@ -1078,7 +917,7 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     var totalScore = this.reviewScore + ' total score';
     ```
 
-  - Use `parseInt` for Numbers and always with a radix for type casting.
+  - Use `parseInt` for integers and always with a radix for type casting. For floats you should use `parseFloat`
 
     ```javascript
     var inputValue = '4';
@@ -1100,6 +939,9 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
     // good
     var val = parseInt(inputValue, 10);
+    
+     // good
+        var val = parseFloat(inputValue);
     ```
 
   - If for whatever reason you are doing something wild and `parseInt` is your bottleneck and need to use Bitshift for 
@@ -1355,6 +1197,22 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
     Jedi.prototype.block = function block() {
       console.log('blocking');
     };
+    
+    //good
+    var prototype;
+    
+    prototype = {
+        fight: function fight() {
+            console.log('fighting');
+        },
+        
+        block: function block() {
+            console.log('blocking');
+        }
+    }
+    
+    //use a extend function
+    extend(this.prototype, prototype);
     ```
 
   - Methods can return `this` to help with method chaining.
@@ -1387,8 +1245,9 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
     var luke = new Jedi();
 
-    luke.jump()
-      .setHeight(20);
+    luke
+        .jump()
+        .setHeight(20);
     ```
 
 
@@ -1446,8 +1305,6 @@ Based off of [AirBnB's style guide](https://github.com/airbnb/javascript).
 
 ## Others
 
-11. *jsDocs*
-
 12. *delete operator*
 In modern JavaScript engines, changing the number of properties on an object is much slower than reassigning the values. 
 The delete keyword should be avoided except when it is necessary to remove a property from an object's iterated list of 
@@ -1466,7 +1323,7 @@ keys, or to change the result of if (key in obj). More [info][3].
 
 16. **Native features**
 Always try to use the native features of the language instead of wrappers, like frameworks. Use css selector 
-querySelector instead of jquery one 
+querySelector instead of jquery. 
 
 17. **Native Object augmentation**
 Native Object augmentation is strictly forbidden.
@@ -1694,12 +1551,9 @@ these rules are added to the file .jscsrc
    - excludeFiles: files and directories that will not take into account.
 
 
-
 **[⬆ back to top](#table-of-contents)**
 
-
 ## Resources
-
 
 **Read This**
 
@@ -1767,7 +1621,6 @@ these rules are added to the file .jscsrc
 ## The JavaScript Style Guide Guide
 
   - [Reference](https://github.com/airbnb/javascript/wiki/The-JavaScript-Style-Guide-Guide)
-
 
 
 **[⬆ back to top](#table-of-contents)**
