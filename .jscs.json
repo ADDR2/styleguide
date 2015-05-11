@@ -1,0 +1,19 @@
+{
+    "validateQuoteMarks": "'",
+    "disallowMultipleVarDecl": true,
+    "maximumLineLength": {
+      "value": 80,
+      "allowComments": true,
+      "allowRegex": true
+    },
+    "disallowKeywords": ["arguments"],
+    "disallowSpaceAfterBinaryOperators": ["==", "!="],
+    "requireSpaceAfterBinaryOperators": ["==", "!="],
+    "validateIndentation": 2,
+    "requireSpaceBeforeBlockStatements": true,
+    "requireLineFeedAtFileEnd": true,
+    "requireDotNotation": true,
+    "requireCommaBeforeLineBreak": true,
+    "disallowTrailingComma": true,
+    "disallowAnonymousFunctions": true
+}
