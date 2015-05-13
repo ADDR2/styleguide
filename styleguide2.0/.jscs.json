@@ -1,15 +1,18 @@
 {
     "validateQuoteMarks": "'",
-    "disallowMultipleVarDecl": true,
+    "requireMultipleVarDecl": true,
     "maximumLineLength": {
-      "value": 80,
+      "value": 120,
       "allowComments": true,
       "allowRegex": true
     },
+    "disallowMultipleLineStrings": true,
     "disallowKeywords": ["arguments"],
+    "disallowFunctionDeclarations": true,
+    "requireSpaceBeforeBinaryOperators": true,
+    "requireSpaceAfterBinaryOperators": true,
     "disallowSpaceAfterBinaryOperators": ["==", "!="],
-    "requireSpaceAfterBinaryOperators": ["==", "!="],
-    "validateIndentation": 2,
+    "validateIndentation": 4,
     "requireSpaceBeforeBlockStatements": true,
     "requireLineFeedAtFileEnd": true,
     "requireDotNotation": true,
