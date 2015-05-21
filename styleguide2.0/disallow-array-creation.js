@@ -17,8 +17,7 @@ module.exports.prototype = {
     check: function(file, errors) {
 
         file.getLines().forEach(function(line, i) {
-            var arrayCreation = "new Array()";
-            var index = line.search(arrayCreation);
+            var index = line.search(/new[\s\t]+Array()/);
             if (index > -1) {
                 errors.add(
                     'Use the literal syntax for array creation.',
