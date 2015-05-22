@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks("grunt-jscs-checker");
+  grunt.loadNpmTasks("grunt-jscs");
   grunt.loadNpmTasks("grunt-githooks");
 
   // Default task(s).

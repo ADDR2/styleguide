@@ -6,7 +6,7 @@
     "grunt-contrib-jshint": "~0.10.0",
     "grunt-contrib-nodeunit": "~0.4.1",
     "grunt-contrib-uglify": "~0.5.0",
-    "grunt-jscs-checker": "^0.8.1",
+    "grunt-jscs": "https://github.com/ADDR2/grunt-jscs/tarball/d83371d528deaf69f3b85fe1403fb6a4c98df4dc",
     "grunt-githooks": "^0.3.1"
   }
 }
